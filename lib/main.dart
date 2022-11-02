@@ -1,122 +1,46 @@
+import 'package:camect/signin.dart';
 import 'package:flutter/material.dart';
-import 'package:audio_wave/audio_wave.dart';
+import 'package:camect/signin.dart';
+import 'package:camect/themes.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+          primaryColor: CamectColor.primary,
+          progressIndicatorTheme:
+              ProgressIndicatorThemeData(color: CamectColor.primary),
+          colorScheme: ColorScheme.light(
+              primary: CamectColor.tertiary, secondary: CamectColor.primary),
+          primarySwatch: CamectColor.tertiary,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textSelectionTheme:
+              TextSelectionThemeData(selectionHandleColor: Colors.transparent)),
       debugShowCheckedModeBanner: false,
-      title: '',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomePage(),
-    );
-  }
-}
+      builder: (context, child) {
+        // Obtain the current media query information.
+        final mediaQueryData = MediaQuery.of(context);
 
-class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+        final constrainedTextScaleFactor =
+            mediaQueryData.textScaleFactor.clamp(0.8, 1.0).toDouble();
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  bool visible = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: SizedBox(
-        height: 60,
-        width: 300,
-        child: Stack(
-          alignment: Alignment.centerRight,
-          children: [
-            visible
-                ? Container(
-              child:Center(
-                child: Container(alignment: Alignment.centerLeft,
-                  child: AudioWave(
-                    height: 50,
-                    width: 250,
-                    spacing: 2.5,
-                    bars: [
-                      AudioWaveBar(heightFactor: .10, color: Colors.white),
-                      AudioWaveBar(heightFactor: .30, color: Colors.white),
-                      AudioWaveBar(heightFactor: .70, color: Colors.white),
-                      AudioWaveBar(heightFactor: .40,color: Colors.white),
-                      AudioWaveBar(heightFactor: .20, color: Colors.white),
-                      AudioWaveBar(heightFactor: .10, color: Colors.white),
-                      AudioWaveBar(heightFactor: .30, color: Colors.white),
-                      AudioWaveBar(heightFactor: .70, color: Colors.white),
-                      AudioWaveBar(heightFactor: .40,color: Colors.white),
-                      AudioWaveBar(color: Colors.white, heightFactor: .20),
-                      AudioWaveBar(heightFactor: .10, color: Colors.white),
-                      AudioWaveBar(heightFactor: .30, color: Colors.white),
-                      AudioWaveBar(heightFactor: .70, color: Colors.white),
-                      AudioWaveBar(heightFactor: .40,color: Colors.white),
-                      AudioWaveBar(heightFactor: .20, color: Colors.white),
-                      AudioWaveBar(heightFactor: .10, color: Colors.white),
-                      AudioWaveBar(heightFactor: .30, color: Colors.white),
-                      AudioWaveBar(heightFactor: .70, color: Colors.white),
-                      AudioWaveBar(heightFactor: .40,color: Colors.white),
-                      AudioWaveBar(heightFactor: .20, color: Colors.white),
-                      AudioWaveBar(heightFactor: .10, color: Colors.white),
-                      AudioWaveBar(heightFactor: .30, color: Colors.white),
-                      AudioWaveBar(heightFactor: .70, color: Colors.white),
-                      AudioWaveBar(heightFactor: .40,color: Colors.white),
-                      AudioWaveBar(heightFactor: .20, color: Colors.white),
-                      AudioWaveBar(heightFactor: .10, color: Colors.white),
-                      AudioWaveBar(heightFactor: .30, color: Colors.white),
-                      AudioWaveBar(heightFactor: .70, color: Colors.white),
-                      AudioWaveBar(heightFactor: .40,color: Colors.white),
-                      AudioWaveBar(heightFactor: .20, color: Colors.white),
-                      AudioWaveBar(heightFactor: .10, color: Colors.white),
-                      AudioWaveBar(heightFactor: .30, color: Colors.white),
-                      AudioWaveBar(heightFactor: .70, color: Colors.white),
-                      AudioWaveBar(heightFactor: .40,color: Colors.white),
-                      AudioWaveBar(heightFactor: .20, color: Colors.white),
-                      AudioWaveBar(heightFactor: .10, color: Colors.white),
-                    ],
-                  ),
-                ),
-              ),
-                    height: 60,
-                    width: 300,
-                    alignment: Alignment.bottomRight,
-                    decoration: BoxDecoration(
-                        color: Colors.teal.shade900,
-                        borderRadius: BorderRadius.circular(50)),
-                  )
-                : Container(
-                    height: 0,
-                  ),
-            Container(
-              height: 55,
-              width: 55,
-              margin: EdgeInsets.all(3),
-              decoration: BoxDecoration(
-                  color: visible ? Colors.white : Colors.greenAccent,
-                  borderRadius: BorderRadius.circular(50)),
-              child: InkWell(
-                onLongPress: () {
-                  setState(() {
-                    visible = !visible;
-                  });
-                },
-                child: Icon(
-                  Icons.mic_none_outlined,
-                  size: 30,
-                  color: visible ? Colors.black : Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+        return MediaQuery(
+          data: mediaQueryData.copyWith(
+            textScaleFactor: constrainedTextScaleFactor,
+          ),
+          child: child!,
+        );
+      },
+      home: const SignIn(),
     );
   }
 }
